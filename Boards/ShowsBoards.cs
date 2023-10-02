@@ -57,12 +57,12 @@ namespace battleship
             }
         }
 
-        private static void PaintPanel(this IBoard board, int planeNumber, string status, ConsoleColor color)
+        private static void PaintPanel(this IBoard board, int panelNumber, string status, ConsoleColor color)
         {
-            if(board.Board[planeNumber].Status == status)
+            if(board.Board[panelNumber].Status == status)
             {
                 Console.BackgroundColor = color;
-                System.Console.Write("~" + " ");
+                System.Console.Write(board.Board[panelNumber].Status + " ");
                 Console.ResetColor();
             }
         }

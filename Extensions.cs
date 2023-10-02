@@ -75,5 +75,17 @@ namespace battleship
         {
             return board.Where(x => x.Coordinates.Row == row && x.Coordinates.Column == column).ToList().First();
         }
+
+        public static void PressEnter()
+        {
+            // Get the input from the user.
+            string input = Console.ReadLine();
+            // Check if the input is empty.
+            while (input != "")
+            {
+                Console.WriteLine("Error: Please press Enter to continue.");
+                input = Console.ReadLine();
+            }
+        }
     }
 }
