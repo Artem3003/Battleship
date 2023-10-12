@@ -1,3 +1,4 @@
+using System.Reflection.PortableExecutable;
 using System;
 
 namespace battleship
@@ -19,7 +20,7 @@ namespace battleship
         public void PlayRound()
         {
             shotCoordinates = Shoot(firstPlayer);
-            ProcessShot(shotCoordinates, firstPlayer);
+            ProcessShot(shotCoordinates, firstPlayer, secondPlayer);
 
             Extensions.PressEnter();
             Console.Clear();
@@ -28,7 +29,7 @@ namespace battleship
             if (!firstPlayer.HasLost)
             {
                 shotCoordinates = Shoot(secondPlayer);
-                ProcessShot(shotCoordinates, secondPlayer);
+                ProcessShot(shotCoordinates, secondPlayer, firstPlayer);
                 Dispose();
             }
         }
@@ -51,7 +52,7 @@ namespace battleship
             return shotCoordinates = new ShotCoordinates(row, column);
         }
 
-        private void ProcessShot(ShotCoordinates shotCoordinates, Player player)
+        private void ProcessShot(ShotCoordinates shotCoordinates, Player player, Player secondPlayer)
         {
             Panel panel = player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column);
             if (panel.OccupationType == OccupationType.EMPTY) // If player missed
@@ -64,21 +65,22 @@ namespace battleship
             {
                 Console.Clear();
                 System.Console.WriteLine($"'You have already hit it'");
-                ProcessShot(Shoot(player), player);
+                ProcessShot(Shoot(player), player, secondPlayer);
             } else // if player hit some ship
             {
                 Console.Clear();
-                Ship ship = player.Ships.First(x => x.OccupationType == panel.OccupationType && x.IsSunk == false);
+                Ship ship = secondPlayer.Ships.First(sh => sh.ShipPlacement.Contains(player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column)) && sh.IsSunk == false);
                 ship.Hits++;
                 panel.OccupationType = OccupationType.HIT;
                 if (ship.IsSunk) // check whether ship is sunk
                 {
+                    ship.ShipPlacement.RemoveNeighbors(player.FiringBoard.Board);
                     System.Console.WriteLine(ship.SunkMessage());;
                 } else
                 {
                     System.Console.WriteLine($"'Hit'");
                 }
-                ProcessShot(Shoot(player), player);
+                ProcessShot(Shoot(player), player, secondPlayer);
             }
         }
 

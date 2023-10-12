@@ -72,6 +72,41 @@ namespace battleship
             return isNeighbor;
         }
 
+        // remove neighboring panels
+        internal static void RemoveNeighbors(this List<Panel> panels, List<Panel> board)
+        {
+            foreach (Panel panel in panels)
+            {
+                int row = panel.Coordinates.Row;
+                int column = panel.Coordinates.Column;
+
+                // up
+                if (row > 0 && board.FindNeighbor(row - 1, column).OccupationType != OccupationType.HIT)
+                {
+                    board.FindNeighbor(row - 1, column).OccupationType = OccupationType.MISS;
+                    board.FindNeighbor(row - 1, column).Status = "M";
+                }
+                // down
+                if (row < IBoard.size - 1 && board.FindNeighbor(row + 1, column).OccupationType != OccupationType.HIT)
+                {
+                    board.FindNeighbor(row + 1, column).OccupationType = OccupationType.MISS;
+                    board.FindNeighbor(row + 1, column).Status = "M";
+                }
+                // right
+                if (column < IBoard.size - 1 && board.FindNeighbor(row, column + 1).OccupationType != OccupationType.HIT)
+                {
+                    board.FindNeighbor(row, column + 1).OccupationType = OccupationType.MISS;
+                    board.FindNeighbor(row, column + 1).Status = "M";
+                }
+                // left
+                if (column > 0 && board.FindNeighbor(row, column - 1).OccupationType != OccupationType.HIT)
+                {
+                    board.FindNeighbor(row, column - 1).OccupationType = OccupationType.MISS;
+                    board.FindNeighbor(row, column - 1).Status = "M";
+                }
+            }
+        }
+
         private static Panel FindNeighbor(this List<Panel> board, int row, int column)
         {
             return board.Where(x => x.Coordinates.Row == row && x.Coordinates.Column == column).ToList().First();

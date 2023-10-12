@@ -20,7 +20,7 @@ namespace battleship
         { 
             get
             {
-                if (column > 9 || column < 0)
+                if (column > 10 || column < 0)
                 {
                     return random.Next(0, 10);
                 }
