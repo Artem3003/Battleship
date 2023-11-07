@@ -68,7 +68,7 @@ namespace battleship
                 ProcessShot(Shoot(player), player, secondPlayer);
             } else // if player hit some ship
             {
-                Console.Clear();
+                // Console.Clear();
                 Ship ship = secondPlayer.Ships.First(sh => sh.ShipPlacement.Contains(player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column)) && sh.IsSunk == false);
                 ship.Hits++;
                 panel.OccupationType = OccupationType.HIT;
@@ -103,13 +103,13 @@ namespace battleship
                 shotCoordinates = null;
             }
             // free any unmanaged object here
-
             disposed = true;
         }
 
         // Distructor
         ~Round()
         {
+            Console.WriteLine("Distructor is working");
             Dispose(disposing: false);
         }
     }

@@ -58,8 +58,8 @@ namespace battleship
                         while (!firstPlayer.HasLost && !secondPlayer.HasLost)
                         {
                             Round round = new Round(firstPlayer, secondPlayer);
-
                             round.PlayRound();
+
 
                             Extensions.PressEnter();
                             Console.Clear();
