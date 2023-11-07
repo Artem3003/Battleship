@@ -10,6 +10,12 @@ namespace battleship
         private int column;
         private char row;
 
+        public ShotCoordinates()
+        {
+            this.column = random.Next(10);
+            this.row = (char)(random.Next(1, 11) + 64);
+        }
+
         public ShotCoordinates(char row, int column) 
         {
             this.row = row;
@@ -35,10 +41,8 @@ namespace battleship
                 if (Char.IsLetter(row) && Char.IsUpper(row))
                 {
                     return (int)row - 64 - 1;
-                } else
-                {
-                    return random.Next(0, 10);
                 }
+                return random.Next(0, 10);
             }
         }
     }

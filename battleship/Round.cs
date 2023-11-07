@@ -1,17 +1,16 @@
-using System.Reflection.PortableExecutable;
 using System;
+using System.Linq;
 
 namespace battleship
 {
     class Round : IDisposable
     {
-        // Flag: Has Dipose already been called
-        bool disposed = false;
-        private Player firstPlayer;
-        private Player secondPlayer;
+        bool disposed = false; // Flag: Has Dipose already been called
+        private IPlayer firstPlayer;
+        private IPlayer secondPlayer;
         private ShotCoordinates shotCoordinates;
 
-        public Round(Player firstPlayer, Player secondPlayer)
+        public Round(IPlayer firstPlayer, IPlayer secondPlayer)
         {
             this.firstPlayer = firstPlayer;
             this.secondPlayer = secondPlayer;
@@ -34,25 +33,54 @@ namespace battleship
             }
         }
 
-        private ShotCoordinates Shoot(Player player)
+        private ShotCoordinates Shoot(IPlayer player)
         {
             ShotCoordinates shotCoordinates;
-            System.Console.WriteLine($"{player.Name} shoots");
-            ShowsBoards.OutputFiringBoard(player.FiringBoard);
+            if (player is Player)
+            {
+                System.Console.WriteLine($"{player.Name} shoots");
+                ShowsBoards.OutputFiringBoard(player.FiringBoard);
 
-            System.Console.WriteLine("Enter coordinates of row(A-J):");
-            char row = Console.ReadKey().KeyChar;
-            row = char.ToUpper(row);
-            System.Console.WriteLine(); // space
+                try
+                {
+                    System.Console.WriteLine("Enter coordinates of row(A-J):");
+                    char row = Console.ReadKey().KeyChar;
+                    row = char.ToUpper(row);
+                    System.Console.WriteLine(); // space
 
-            System.Console.WriteLine("Enter coordinates of column(1-10):");
-            int column = Convert.ToInt32(Console.ReadLine());
-            System.Console.WriteLine(); // space
+                    System.Console.WriteLine("Enter coordinates of column(1-10):");
+                    int column = Convert.ToInt32(Console.ReadLine());
+                    System.Console.WriteLine(); // space
 
-            return shotCoordinates = new ShotCoordinates(row, column);
+                    shotCoordinates = new ShotCoordinates(row, column);
+                    return shotCoordinates;
+                }
+                catch (System.ArgumentNullException)
+                {
+                    UserInputException exception = new UserInputException("You should write coordinates row(A-J) and column(1-10)");
+                    System.Console.WriteLine(exception.Message);
+                    Shoot(player);
+                }
+                catch (System.FormatException)
+                {
+                    UserInputException exception = new UserInputException("You should write coordinate. Please don't leave fields empty");
+                    System.Console.WriteLine(exception.Message);
+                    Shoot(player);
+                }
+            }
+            if (player is Bot)
+            {
+                System.Console.WriteLine("Bot shoots");
+                shotCoordinates = new ShotCoordinates();
+                Panel panel = player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column);
+                System.Console.WriteLine($"{panel.OccupationType}");
+                System.Console.WriteLine($"Bot fired");
+                return shotCoordinates;
+            }
+            throw new Exception();
         }
 
-        private void ProcessShot(ShotCoordinates shotCoordinates, Player player, Player secondPlayer)
+        private void ProcessShot(ShotCoordinates shotCoordinates, IPlayer player, IPlayer secondPlayer)
         {
             Panel panel = player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column);
             if (panel.OccupationType == OccupationType.EMPTY) // If player missed
@@ -68,7 +96,7 @@ namespace battleship
                 ProcessShot(Shoot(player), player, secondPlayer);
             } else // if player hit some ship
             {
-                // Console.Clear();
+                Console.Clear();
                 Ship ship = secondPlayer.Ships.First(sh => sh.ShipPlacement.Contains(player.FiringBoard.Board.At(shotCoordinates.Row, shotCoordinates.Column)) && sh.IsSunk == false);
                 ship.Hits++;
                 panel.OccupationType = OccupationType.HIT;
@@ -103,13 +131,13 @@ namespace battleship
                 shotCoordinates = null;
             }
             // free any unmanaged object here
+
             disposed = true;
         }
 
         // Distructor
         ~Round()
         {
-            Console.WriteLine("Distructor is working");
             Dispose(disposing: false);
         }
     }

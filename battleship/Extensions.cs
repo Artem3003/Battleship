@@ -26,7 +26,7 @@ namespace battleship
                                      x.Coordinates.Row <= endRow &&
                                      x.Coordinates.Column <= endColumn).ToList();
         }
-        
+
         // check whether neighbors exist
         internal static bool HasNeighbors(this List<Panel> panels, List<Panel> board)
         {
@@ -107,7 +107,7 @@ namespace battleship
             }
         }
 
-        private static Panel FindNeighbor(this List<Panel> board, int row, int column)
+        internal static Panel FindNeighbor(this List<Panel> board, int row, int column)
         {
             return board.Where(x => x.Coordinates.Row == row && x.Coordinates.Column == column).ToList().First();
         }
