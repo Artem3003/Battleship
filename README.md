@@ -38,55 +38,91 @@ The Player class encapsulates the state and behavior of a player in the Battlesh
 Here I have used private modifier for better encapsulation of my code.
 
 Field:
-![](./Images/1-private.jpg)
+![](./Images/lab1/1-private.jpg)
 
 Method:
-![](./Images/1-private-method.jpg)
+![](./Images/lab1/1-private-method.jpg)
 
 Here I have used public modifier because I need access to a variable outside the class in C#
 
 Field:
-![](./Images/1-public.jpg)
+![](./Images/lab1/1-public.jpg)
 
 Method:
-![](./Images/1-public-method.jpg)
+![](./Images/lab1/1-public-method.jpg)
 
 Here I have used protected modifier because I need that this method was accessed only in this class or inhereted classes
-![](./Images/1-protected-method.jpg)
+![](./Images/lab1/1-protected-method.jpg)
 
 2. Ensure the presence of properties in classes: it is more difficult than just get;set; to justify the feasibility of creating a property.
 
 Here I have accessor which gets char and convert it to num, It's necessary for correct shooting
-![](./Images/2-get-set.jpg)
+![](./Images/lab1/2-get-set.jpg)
 
 3. Create the following constructors for the classes being developed: default constructor, constructor with parameters, private constructor, static constructor
 
 Default constructor:
-![](./Images/3-defaultConstructor.jpg)
+![](./Images/lab1/3-defaultConstructor.jpg)
 
 Constructor with parameters:
-![](./Images/3-constructorWithParameters.jpg)
+![](./Images/lab1/3-constructorWithParameters.jpg)
 
 Private constructor:
-![](./Images/3-privateConstructor.jpg)
+![](./Images/lab1/3-privateConstructor.jpg)
 
 Static constructor:
-![](./Images/3-staticConstructor.jpg)
+![](./Images/lab1/3-staticConstructor.jpg)
 
 4. Use virtual and overridden methods
 
-![](./Images/4-override.jpg)
+![](./Images/lab1/4-override.jpg)
 
-![](./Images/4-vitrueal.jpg)
+![](./Images/lab1/4-vitrueal.jpg)
 
 5. Add methods to classes that will allow you to control the destruction of instances of these classes: implement the IDisposable interface, create destructors, ensure that conflicts between Dispose and the destructor are avoided.
 
-![](./Images/5-Destructor.jpg)
+![](./Images/lab1/5-Destructor.jpg)
 
-![](./Images/5-IDisposable.jpg)
+![](./Images/lab1/5-IDisposable.jpg)
 
 ## UML class diagram
 
-![](./Images/UML-diagram.jpg)
+![](./Images/lab1/UML-diagram.jpg)
 
 [UML-Diagram](UML-class-diagram.vpp)
+
+# Labaratory work 2
+
+## Task 
+
+1. A set of interfaces. And one of the classes must implement at least 2 interfaces. Also demonstrate the implementation of the explicit implementation of the interface, justify its use.
+
+![](./Images/lab2/1-interfaces.jpg)
+
+2. Abstract class. Ensure its inheritance. The presence of abstract methods in this class is mandatory.
+
+![](./Images/lab2/2-abstract_class.jpg)
+
+3. The mechanism "delegate - event - event handler".
+
+![](./Images/lab2/3-events_delegates.jpg)
+
+4. Convert code that works with events and event handlers to code that uses: anonymous methods; lambda expressions; Action and Func types (each of them). It is allowed to implement the code of one event in different ways, not necessarily different events.
+
+![](./Images/lab2/4.jpg)
+
+5. Mechanism for creating and handling your own errors: create a new exception class; create a new class of arguments to pass to the exception handler;
+ensure the initiation of the created exception and demonstrate how the error handler works;
+implement various error handling scenarios.
+
+![](./Images/lab2/5-error_handler.jpg)
+
+![](./Images/lab2/5-exception_class.jpg)
+
+6. Method-extension of any class.
+
+![](./Images/lab2/6-at.jpg)
+
+![](./Images/lab2/6-find_neighbor.jpg)
+
+![](./Images/lab2/6-range.jpg)
