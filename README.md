@@ -126,3 +126,7 @@ implement various error handling scenarios.
 ![](./Images/lab2/6-find_neighbor.jpg)
 
 ![](./Images/lab2/6-range.jpg)
+
+## UML-diagram
+
+[UML-Diagram](UML-class-diagram.vpp)
